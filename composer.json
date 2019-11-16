@@ -15,7 +15,6 @@
         "webklex/laravel-imap" : "^1",
         "ext-imap": "*",
         "ext-mbstring": "*",
-        "ext-mcrypt": "*",
         "laravel/framework": ">=5.2 || >=6"
     },
     "autoload": {
@@ -31,6 +30,6 @@
     "require-dev": {
         "phpunit/phpunit": "^8",
         "orchestra/testbench": "^4.0",
-        "ext-sockets": "*",
+        "ext-sockets": "*"
     }
 }
