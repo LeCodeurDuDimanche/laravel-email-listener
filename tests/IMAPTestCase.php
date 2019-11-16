@@ -44,7 +44,7 @@ class IMAPTestCase extends TestCase
     public static function setUpBeforeClass() : void
     {
         //$greenmailProc is actually (on linux) the bash instance hosting the greenmail process
-        self::$greenmailProc = proc_open('echo $$&&java -Dgreenmail.setup.test.smtp\
+        self::$greenmailProc = proc_open('echo $$&&sudo java -Dgreenmail.setup.test.smtp\
                                       -Dgreenmail.setup.test.imap\
                                       -Dgreenmail.users=from:pwd@localhost,to:pwd@localhost\
                                       -jar ' . self::$greenmailJar,
