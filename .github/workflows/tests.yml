@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Install dependencies
       run: |
-        sudo apt install php*-imap php*-mbstring php*-mcrypt php*-sockets
+        sudo apt upgrade&&apt install php*-imap php*-mbstring php*-mcrypt php*-sockets
         composer install
     - name: Run phpunit tests
       run: phpunit
