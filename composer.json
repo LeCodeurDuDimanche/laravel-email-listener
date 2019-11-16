@@ -1,0 +1,36 @@
+{
+    "name": "lecodeurdudimanche/laravel-email-listener",
+    "description": "Simple library to do actions when receiving emails, desgined to work with Laravel",
+    "type": "library",
+    "license": "MIT",
+    "version" : "1.0.0",
+    "authors": [
+        {
+            "name": "Adrien Duval",
+            "email": "adrien.duval.bonnet@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7",
+        "webklex/laravel-imap" : "^1",
+        "ext-imap": "*",
+        "ext-mbstring": "*",
+        "ext-mcrypt": "*",
+        "laravel/framework": ">=5.2 || >=6"
+    },
+    "autoload": {
+        "psr-4": {
+            "lecodeurdudimanche\\EmailListener\\" : "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "lecodeurdudimanche\\EmailListener\\Tests\\" : "tests/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8",
+        "orchestra/testbench": "^4.0",
+        "ext-sockets": "*",
+    }
+}

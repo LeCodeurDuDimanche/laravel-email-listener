@@ -1,0 +1,38 @@
+{
+  "sentByTestUser" : {
+    "type": "email",
+    "filters": [
+      {
+          "method" : "from",
+          "args" : "from@localhost"
+      }
+    ]
+  },
+  "sentByTestUserWithAttachments" : {
+      "type" : "email",
+      "filters" : [
+          {
+              "method" : "from",
+              "args" : "from@localhost"
+          }
+      ],
+      "attachments" : {
+          "type" : "attachment",
+          "filters": [
+              {
+                  "method" : "min",
+                  "args" : 1
+              }
+          ]
+      }
+  },
+  "hasAttachments" : {
+    "type": "attachment",
+    "filters": [
+      {
+          "method" : "min",
+          "args" : 1
+      }
+    ]
+  }
+}

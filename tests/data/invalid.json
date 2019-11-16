@@ -1,0 +1,15 @@
+{
+  "sentByTestUser" : {
+    "type": "thistypedoesnotexists",
+    "filters": [
+      {
+          "method" : "from",
+          "args" : "from@localhost"
+      }
+    ]
+  },
+  "hasAttachments" : {
+    "type": "attachment",
+    "filters": "thisisnotavalidfilter"
+  }
+}
