@@ -9,10 +9,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: Tests port availability
+    - run: |
+        sudo apt -y update&&sudo apt -y install netcat
+        sudo nc -l localhost 3143 & sudo nc localhost 3143
     - name: Install dependencies
       run: |
-        sudo apt -y update&&sudo apt -y install netcat php*-imap php*-mbstring php*-mcrypt php*-sockets
-        sudo nc -l localhost 3143 & sudo nc localhost 3143
+        sudo apt -y update&&sudo apt -y install php*-imap php*-mbstring php*-mcrypt php*-sockets
         composer install
     - name: Run phpunit tests
       run: phpunit
