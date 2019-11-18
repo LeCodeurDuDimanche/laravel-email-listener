@@ -12,8 +12,8 @@ jobs:
     - name: Tests port availability
       run: |
         sudo apt -y update&&sudo apt -y install netcat
-        sudo nc -l localhost 3143 & echo Le port est ouvert|sudo nc localhost 3143
-        sudo nc -l localhost 3025 & echo Le port est ouvert|sudo nc localhost 3025
+        nc -lp 3143 & echo Le port 3143 est ouvert|nc -c localhost 3143
+        nc -lp 3025 & echo Le port 3025 est ouvert|nc -c localhost 3025
     - name: Install dependencies
       run: |
         sudo apt -y update&&sudo apt -y install php*-imap php*-mbstring php*-mcrypt php*-sockets
