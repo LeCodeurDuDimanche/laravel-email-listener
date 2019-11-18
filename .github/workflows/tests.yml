@@ -12,6 +12,9 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt update&&sudo apt install php*-imap php*-mbstring php*-mcrypt php*-sockets
+        sudo netstat -nlp
+        sudo netstat -nlp | grep :3143
+        sudo netstat -nlp | grep :3025
         composer install
     - name: Run phpunit tests
       run: phpunit
