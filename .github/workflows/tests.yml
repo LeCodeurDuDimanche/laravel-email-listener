@@ -10,10 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Tests port availability
-      run: |
-        sudo apt -y update&&sudo apt -y install netcat
-        nc -lp 3143 & echo Le port 3143 est ouvert|nc -N localhost 3143
-        nc -lp 3025 & echo Le port 3025 est ouvert|nc -N localhost 3025
     - name: Install dependencies
       run: |
         sudo apt -y update&&sudo apt -y install php*-imap php*-mbstring php*-mcrypt php*-sockets
