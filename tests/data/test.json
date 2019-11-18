@@ -1,0 +1,129 @@
+{
+    "actions": [
+        {
+            "client": "to",
+            "filter": "logCommand",
+            "callback": "lecodeurdudimanche\\EmailListener\\Tests\\Feature\\FeatureTest@log"
+        },
+        {
+            "client": "to",
+            "filter": "execCommand",
+            "callback": "lecodeurdudimanche\\EmailListener\\Tests\\Feature\\FeatureTest@executeAssigments"
+        },
+        {
+            "client": "to",
+            "filter": "hasOrderAttachment",
+            "callback": "lecodeurdudimanche\\EmailListener\\Tests\\Feature\\FeatureTest@processOrder"
+        },
+        {
+            "client": "to",
+            "filter": "Another filter",
+            "callback": "lecodeurdudimanche\\EmailListener\\Tests\\Feature\\FeatureTest@somePublicMethod"
+        },
+        {
+            "client": "to",
+            "filter": "hasAttachments",
+            "callback": "lecodeurdudimanche\\EmailListener\\Tests\\Feature\\FeatureTest@somePublicMethod"
+        }
+    ],
+    "filters": {
+        "logCommand": {
+            "type": "email",
+            "filters": [
+                {
+                    "method": "subject",
+                    "args": "!!log!!"
+                }
+            ]
+        },
+        "execCommand": {
+            "type": "email",
+            "filters": [
+                {
+                    "method": "subject",
+                    "args": "!!exec!!"
+                }
+            ]
+        },
+        "hasOrderAttachment": {
+            "type": "email",
+            "filters": [
+                {
+                    "method": "text",
+                    "args": "order"
+                }
+            ],
+            "attachments": {
+                "type": "attachment",
+                "filters": [
+                    {
+                        "method": "num",
+                        "args": 1
+                    },
+                    {
+                        "method": "match",
+                        "args": "\/^order-[0-9]{6}\\.pdf$\/"
+                    }
+                ]
+            }
+        },
+        "sentByTestUser": {
+            "type": "email",
+            "filters": [
+                {
+                    "method": "from",
+                    "args": "from@localhost"
+                }
+            ]
+        },
+        "sentByTestUserWithAttachments": {
+            "type": "email",
+            "filters": [
+                {
+                    "method": "from",
+                    "args": "from@localhost"
+                }
+            ],
+            "attachments": {
+                "type": "attachment",
+                "filters": [
+                    {
+                        "method": "min",
+                        "args": 1
+                    }
+                ]
+            }
+        },
+        "hasAttachments": {
+            "type": "attachment",
+            "filters": [
+                {
+                    "method": "min",
+                    "args": 1
+                }
+            ]
+        },
+        "Another filter": {
+            "type": "email",
+            "filters": [
+                {
+                    "method": "cc",
+                    "args": "bot@localhost"
+                },
+                {
+                    "method": "text",
+                    "args": "auto"
+                }
+            ],
+            "attachments": {
+                "type": "attachment",
+                "filters": [
+                    {
+                        "method": "num",
+                        "args": 0
+                    }
+                ]
+            }
+        }
+    }
+}

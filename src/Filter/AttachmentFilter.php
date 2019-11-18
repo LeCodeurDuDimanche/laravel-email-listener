@@ -58,34 +58,34 @@ class AttachmentFilter extends Filter {
         });
     }
 
-    protected function hasCb(Attachments $attachments, $callable) : bool
+    protected function hasCb(Attachments $attachments, $condition) : bool
     {
-        if (! is_callable($callable))
+        if (! is_callable($condition))
             throw\InvalidArgumentException("First argument of method has() must be callable");
 
-        return $attachments->some($callable);
+        return $attachments->contains($condition);
     }
 
-    protected function noCb(Attachments $attachments, $callable) : bool
+    protected function noCb(Attachments $attachments, $condition) : bool
     {
-        if (! is_callable($callable))
+        if (! is_callable($condition))
             throw\InvalidArgumentException("First argument of method no() must be callable");
 
-        return ! $this->hasCb($attachments, $callable);
+        return ! $this->hasCb($attachments, $condition);
     }
 
-    protected function everyCb(Attachments $attachments, $callable) : bool
+    protected function everyCb(Attachments $attachments, $condition) : bool
     {
-        if (! is_callable($callable))
+        if (! is_callable($condition))
             throw\InvalidArgumentException("First argument of method every() must be callable");
 
-        return $attachments->every($callable);
+        return $attachments->every($condition);
 
     }
 
-    protected function filterCb(Attachments $attachments, $callable) : bool
+    protected function filterCb(Attachments $attachments, $callback) : bool
     {
-        return boolval(call_user_func($callable, $attachments));
+        return boolval(call_user_func($callback, $attachments));
     }
 
 

@@ -1,5 +1,5 @@
 <?php
-namespace lecodeurdudimanche\EmailListener\Filter;
+namespace lecodeurdudimanche\EmailListener;
 
 class CorruptedDataException extends \Exception
 {

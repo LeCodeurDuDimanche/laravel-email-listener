@@ -29,7 +29,7 @@ class ActionTest extends TestCase
     public function __construct()
     {
         parent::__construct();
-        $this->filter = Filter::load('sentByTestUser', self::$filtersSaveFile);
+        $this->filter = Filter::load('sentByTestUser', self::$configFile);
         $this->action = [$this, 'callbackMethod'];
         $this->mockEmail = new MockMessage();
     }
@@ -39,7 +39,7 @@ class ActionTest extends TestCase
         $action = new Action($this->filter, $this->action);
 
         $this->assertEquals($this->filter, $action->getFilter(), "Filter mismatch");
-        $this->assertEquals($this->action, $action->getAction(), "Action mismatch");
+        $this->assertEquals($this->action, $action->getCallback(), "Action mismatch");
     }
 
     public function test_can_construct_with_null_values()
@@ -47,7 +47,7 @@ class ActionTest extends TestCase
         $action = new Action();
 
         $this->assertNull($action->getFilter());
-        $this->assertNull($action->getAction());
+        $this->assertNull($action->getCallback());
     }
 
 
@@ -55,29 +55,29 @@ class ActionTest extends TestCase
     {
         $action = new Action(null, ActionTest::class . "@callbackMethod");
 
-        $this->assertTrue(is_callable($action->getAction()));
-        $this->assertEquals($this->callbackMethod(), call_user_func($action->getAction()));
+        $this->assertTrue(is_callable($action->getCallback()));
+        $this->assertEquals($this->callbackMethod(), call_user_func($action->getCallback()));
     }
 
     public function test_can_construct_with_laravel_style_static_callable()
     {
         $action = new Action(null, ActionTest::class . "@staticTestMethod");
 
-        $this->assertTrue(is_callable($action->getAction()));
-        $this->assertEquals(self::staticTestMethod(), call_user_func($action->getAction()));
+        $this->assertTrue(is_callable($action->getCallback()));
+        $this->assertEquals(self::staticTestMethod(), call_user_func($action->getCallback()));
     }
 
     public function test_can_construct_with_closure()
     {
         $action = new Action(null, function(){ return true;});
 
-        $this->assertTrue(is_callable($action->getAction()));
-        $this->assertEquals(true, call_user_func($action->getAction()));
+        $this->assertTrue(is_callable($action->getCallback()));
+        $this->assertEquals(true, call_user_func($action->getCallback()));
     }
 
     public function test_can_construct_with_string_filter()
     {
-        $action = new Action('sentByTestUser', null, self::$filtersSaveFile);
+        $action = new Action('sentByTestUser', null, self::$configFile);
 
         $this->assertInstanceOf(Filter::class, $action->getFilter());
     }

@@ -6,14 +6,14 @@ use lecodeurdudimanche\EmailListener\Tests\TestCase;
 use lecodeurdudimanche\EmailListener\Filter\EmailFilter;
 use lecodeurdudimanche\EmailListener\Filter\AttachmentFilter;
 use lecodeurdudimanche\EmailListener\Filter\Filter;
-use lecodeurdudimanche\EmailListener\Filter\CorruptedDataException;
+use lecodeurdudimanche\EmailListener\CorruptedDataException;
 
 
 class FilterTest extends TestCase
 {
     public function test_can_load_with_filename()
     {
-        $filter = Filter::load('sentByTestUser', self::$filtersSaveFile);
+        $filter = Filter::load('sentByTestUser', self::$configFile);
 
         $this->assertNotNull($filter);
         $this->assertInstanceOf(EmailFilter::class, $filter);
@@ -21,7 +21,7 @@ class FilterTest extends TestCase
 
     public function test_can_load_different_filter_types()
     {
-        $filter = Filter::load('hasAttachments', self::$filtersSaveFile);
+        $filter = Filter::load('hasAttachments', self::$configFile);
 
         $this->assertNotNull($filter);
         $this->assertInstanceOf(AttachmentFilter::class, $filter);
@@ -29,7 +29,7 @@ class FilterTest extends TestCase
 
     public function test_can_handle_missing_filter()
     {
-        $filter = Filter::load('anyFilter', self::$filtersSaveFile);
+        $filter = Filter::load('anyFilter', self::$configFile);
 
         $this->assertNull($filter);
     }
@@ -42,7 +42,7 @@ class FilterTest extends TestCase
 
     public function test_can_handle_null_filename_with_config()
     {
-        config(['filter.file' => self::$filtersSaveFile]);
+        config(['email-listener.config-file' => self::$configFile]);
         $filter = Filter::load('sentByTestUser');
 
         $this->assertNotNull($filter);
@@ -52,7 +52,7 @@ class FilterTest extends TestCase
     public function test_can_handle_null_filename_without_config()
     {
         $this->expectException(\InvalidArgumentException::class);
-        config(['filter.file' => '']);
+        config(['email-listener.config-file' => '']);
         $filter = Filter::load('sentByTestUser');
     }
 
@@ -70,7 +70,7 @@ class FilterTest extends TestCase
         ];
         $filter = (new EmailFilter())->fromArray($filters);
 
-        $this->assertEquals($filters, $filter->toArray());
+        $this->assertEquals([$filter->getName() => $filters], $filter->toArray());
      }
 
      public function test_handle_correctly_invalid_data()

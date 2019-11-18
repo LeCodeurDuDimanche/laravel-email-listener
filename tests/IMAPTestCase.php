@@ -15,26 +15,9 @@ class IMAPTestCase extends TestCase
         'password' => 'pwd',
     ];
 
-    protected static $fetcher = [
-        'host'          => 'localhost',
-        'port'          => 3143,
-        'encryption'    => false,
-        'validate_cert' => false,
-        'username'      => 'to',
-        'password'      => 'pwd',
-        'protocol'      => 'imap'
-    ];
-
     private static $greenmailJar = __DIR__ . "/bin/greenmail.jar";
     private static $greenmailProc = null;
     private static $greenmailPid = 0;
-
-    protected function getEnvironmentSetUp($app)
-    {
-        $config = require(self::$vendorDir . "/webklex/laravel-imap/src/config/imap.php");
-        foreach($config as $key => $value)
-            $app['config']->set($key, $value);
-    }
 
     protected function getPackageProviders($app)
     {

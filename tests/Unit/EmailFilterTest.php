@@ -24,7 +24,7 @@ class EmailFilterTest extends IMAPTestCase
 
     public function test_can_filter_using_saved_filter()
     {
-        $emails = Filter::load('sentByTestUser', self::$filtersSaveFile)
+        $emails = Filter::load('sentByTestUser', self::$configFile)
             ->run(self::getInbox());
 
         $this->assertEmails([1, 2, 4, 5, 6], $emails);
@@ -32,7 +32,7 @@ class EmailFilterTest extends IMAPTestCase
 
     public function test_can_filter_using_saved_filter_with_attachment_filter()
     {
-        $emails = Filter::load('sentByTestUserWithAttachments', self::$filtersSaveFile)
+        $emails = Filter::load('sentByTestUserWithAttachments', self::$configFile)
             ->run(self::getInbox());
 
         $this->assertEmails([5, 6], $emails);
@@ -51,7 +51,7 @@ class EmailFilterTest extends IMAPTestCase
             ]
         ];
         $filter = (new EmailFilter())->fromArray($array);
-        $this->assertEquals($array, $filter->toArray());
+        $this->assertEquals([$filter->getName() => $array], $filter->toArray());
     }
 
     public function test_loads_correctly_from_array_without_attachments()
@@ -60,8 +60,8 @@ class EmailFilterTest extends IMAPTestCase
             "type" => "email",
             "filters" => [["method" => "from", "args" => "address"]]
         ];
-        $filter = (new EmailFilter())->fromArray($array);
-        $this->assertEquals($array, $filter->toArray());
+        $filter = (new EmailFilter())->fromArray($array)->setName('test');
+        $this->assertEquals(['test' => $array], $filter->toArray());
     }
 
     public function test_can_run_from_filter()

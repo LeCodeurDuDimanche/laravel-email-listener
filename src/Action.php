@@ -19,11 +19,14 @@ class Action {
     public function callback($action) : Action
     {
         // Resolves Laravel style callables Class@method
-        if (is_string($action) && $posAt = strpos($action, '@'))
-            $action = [resolve(substr($action, 0, $posAt)), substr($action, $posAt + 1)];
+        $name = '';
+        if (is_string($action) && $posAt = strpos($action, '@')) {
+            $name = $action;
+            $action = [resolve(substr($name, 0, $posAt)), substr($name, $posAt + 1)];
+        }
 
         if (! is_callable($action))
-            throw new \InvalidArgumentException("Action must be callable");
+            throw new \InvalidArgumentException("Action $name must be callable");
 
         $this->action = $action;
         return $this;
@@ -57,7 +60,7 @@ class Action {
         return $this->filter;
     }
 
-    public function getAction() : ?callable
+    public function getCallback() : ?callable
     {
         return $this->action;
     }

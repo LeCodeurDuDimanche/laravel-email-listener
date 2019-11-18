@@ -46,9 +46,9 @@ class EmailFilter extends Filter{
     public function toArray() : array
     {
         $array = parent::toArray();
-        $attachmentsArray = $this->attachmentFilter->toArray();
+        $attachmentsArray = $this->attachmentFilter->toArray()[$this->attachmentFilter->getName()];
         if ($attachmentsArray['filters'])
-            $array['attachments'] = $attachmentsArray;
+            $array[$this->getName()]['attachments'] = $attachmentsArray;
         return $array;
     }
 
@@ -73,8 +73,6 @@ class EmailFilter extends Filter{
     {
         foreach($this->filters as $filter)
             call_user_func_array([$query, $filter['method']], $filter['args']);
-
-        $emails = $query->get();
 
         return $this->attachmentFilter->doFilter($query);
     }

@@ -21,7 +21,7 @@ class AttachmentFilterTest extends IMAPTestCase
 
     public function test_can_filter_using_saved_filter()
     {
-        $emails = Filter::load('hasAttachments', self::$filtersSaveFile)
+        $emails = Filter::load('hasAttachments', self::$configFile)
             ->run(self::getInbox());
 
         $this->assertEmails([1, 3, 4], $emails);
