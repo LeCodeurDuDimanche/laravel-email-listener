@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Tests port availability
-    - run: |
+      run: |
         sudo apt -y update&&sudo apt -y install netcat
         sudo nc -l localhost 3143 & sudo nc localhost 3143
     - name: Install dependencies
