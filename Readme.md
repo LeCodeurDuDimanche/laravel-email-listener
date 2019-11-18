@@ -32,9 +32,9 @@ In the [schedule()](https://laravel.com/docs/5.7/scheduling#defining-schedules) 
 $schedule->call(new EmailListener)->everyfiveMinutes(); // or any other [frequency option](https://laravel.com/docs/5.7/scheduling#schedule-frequency-options)
 ```
 
-This will cause the 'EmailListener' to load actions and filters from the configuration file (whose path must be provided in `email-listener.config-file` configuration value) and then run.
+This will cause the `EmailListener` to load actions and filters from the configuration file (whose path must be provided in `email-listener.config-file` configuration value) and then run.
 
-In order to create the configuration programtically, or to use the library without loading anything, you'll need to register `Actions`.
+In order to create the configuration programtically, or to use the library without loading anything, you'll need to register `Action`s.
 First, you'll need to create an `Action` object, that contains a callback to be executed and a filter determining which email will trigger that action :
 ```php
 $action = (new Action())
@@ -62,7 +62,7 @@ $emailListener->run();
 $emailListener->save();
 ```
 
-For instance, to add actions to an existing listener and then save it :
+For instance, this is the code to add an action to an existing listener and then save it :
 ```php
 (new EmailListener())
     ->load()
