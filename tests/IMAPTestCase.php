@@ -27,6 +27,7 @@ class IMAPTestCase extends TestCase
 
     private static $greenmailJar = __DIR__ . "/bin/greenmail.jar";
     private static $greenmailProc = null;
+    private static $greenmailPid = 0;
 
     protected function getEnvironmentSetUp($app)
     {
@@ -43,13 +44,14 @@ class IMAPTestCase extends TestCase
     public static function setUpBeforeClass() : void
     {
         //$greenmailProc is actually (on linux) the bash instance hosting the greenmail process
-        self::$greenmailProc = proc_open('exec java -Dgreenmail.setup.test.smtp\
+        self::$greenmailProc = proc_open('echo $$&&exec java -Dgreenmail.setup.test.smtp\
                                       -Dgreenmail.setup.test.imap\
                                       -Dgreenmail.users=from:pwd@localhost,to:pwd@localhost\
-                                      -jar ' . self::$greenmailJar . ' &> /dev/null',
-                                      [],
+                                      -jar ' . self::$greenmailJar . " 2>&1 /dev/null",
+                                      [1 => ["pipe", "w"]],
                                       $pipes
             );
+        self::$greenmailPid = intval(fgets($pipes[1]));
 
         while(! self::checkServer(self::$sender['host'], self::$sender['port']))
             sleep(1);
@@ -66,7 +68,9 @@ class IMAPTestCase extends TestCase
     public static function tearDownAfterClass() : void
     {
         // Kill the greenmail server
-        proc_terminate(self::$greenmailProc);
+        posix_kill(self::$greenmailPid, SIGKILL);
+        // Close the hosting process
+        proc_terminate(self::$greenmailProc, SIGKILL);
         proc_close(self::$greenmailProc);
     }
 
