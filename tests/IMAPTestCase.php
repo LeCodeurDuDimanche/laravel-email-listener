@@ -21,6 +21,7 @@ class IMAPTestCase extends TestCase
 
     protected function getEnvironmentSetUp($app)
     {
+	parent::getEnvironmentSetUp($app);
         $config = require(self::$vendorDir . "/webklex/laravel-imap/src/config/imap.php");
         foreach($config as $key => $value)
             $app['config']->set($key, $value);
