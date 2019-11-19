@@ -9,5 +9,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: Install dependencies
+      run: |
+        sudo apt -y update&&sudo apt -y install php*-imap php*-mbstring php*-mcrypt php*-sockets
+        composer install
     - name: Run phpunit tests
       run: phpunit
