@@ -1,5 +1,6 @@
 # Laravel Email Listener 
 [![Build status][ci_badge]][github_actions] 
+[![GitHub license][license_badge]][license_url]
 [![Package version][version_badge]][packagist_url] 
 [![Downloads][downloads_badge]][packagist_url]
 
@@ -120,5 +121,7 @@ _Coming soon_
 [ci_badge]: https://github.com/lecodeurdudimanche/laravel-email-listener/workflows/CI/badge.svg
 [github_actions]:https://github.com/LeCodeurDuDimanche/laravel-email-listener/actions?query=workflow%3ACI
 [version_badge]: https://img.shields.io/packagist/v/lecodeurdudimanche/laravel-email-listener.svg
-[downloads_badge]: https://img.shields.io/packagist/dt/lecodeurdudimanche/laravel-email-listener.svg
+[downloads_badge]: https://img.shields.io/packagist/dt/lecodeurdudimanche/laravel-email-listener.svg?color=blue
 [packagist_url]: https://packagist.org/packages/lecodeurdudimanche/laravel-email-listener
+[license_badge]: https://img.shields.io/github/license/LeCodeurDuDimanche/laravel-email-listener
+[license_url]: https://github.com/LeCodeurDuDimanche/laravel-email-listener/blob/master/License.md
