@@ -19,6 +19,13 @@ class IMAPTestCase extends TestCase
     private static $greenmailProc = null;
     private static $greenmailPid = 0;
 
+    protected function getEnvironmentSetUp($app)
+    {
+        $config = require(self::$vendorDir . "/webklex/laravel-imap/src/config/imap.php");
+        foreach($config as $key => $value)
+            $app['config']->set($key, $value);
+    }
+
     protected function getPackageProviders($app)
     {
         return [\Webklex\IMAP\Providers\LaravelServiceProvider::class];
@@ -27,10 +34,10 @@ class IMAPTestCase extends TestCase
     public static function setUpBeforeClass() : void
     {
         //$greenmailProc is actually (on linux) the bash instance hosting the greenmail process
-        self::$greenmailProc = proc_open('echo $$&&java -Dgreenmail.setup.test.smtp\
+        self::$greenmailProc = proc_open('echo $$&&exec java -Dgreenmail.setup.test.smtp\
                                       -Dgreenmail.setup.test.imap\
                                       -Dgreenmail.users=from:pwd@localhost,to:pwd@localhost\
-                                      -jar ' . self::$greenmailJar,
+                                      -jar ' . self::$greenmailJar . " 2>&1 /dev/null",
                                       [1 => ["pipe", "w"]],
                                       $pipes
             );
@@ -51,9 +58,9 @@ class IMAPTestCase extends TestCase
     public static function tearDownAfterClass() : void
     {
         // Kill the greenmail server
-        posix_kill(self::$greenmailPid, SIGTERM);
+        posix_kill(self::$greenmailPid, SIGKILL);
         // Close the hosting process
-        proc_terminate(self::$greenmailProc);
+        proc_terminate(self::$greenmailProc, SIGKILL);
         proc_close(self::$greenmailProc);
     }
 
